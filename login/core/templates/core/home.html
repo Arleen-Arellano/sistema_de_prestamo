@@ -3,12 +3,31 @@
 
 {% block content %}
 
-<h3>Inicio</h3>
 {% if request.user.is_authenticated %}
     <hr>
     <h4>
         {{user.username | upper }}, Bienvenido
     </h4>
+    <div class="card-deck mt-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Renovar Libro</h5>
+            <p class="card-text">Renueva tus libros fácilmente desde tu cuenta.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Solicitar Préstamo</h5>
+            <p class="card-text">Explora nuestro catálogo y solicita préstamos de tus libros favoritos.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Notificaciones</h5>
+            <p class="card-text">Recibe notificaciones sobre fechas de devolución y novedades.</p>
+          </div>
+        </div>
+      </div>
 {% endif %}
 
 {% endblock %}
