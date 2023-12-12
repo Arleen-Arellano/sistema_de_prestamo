@@ -1,14 +1,29 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h3>Buscar préstamos por RUT</h3>
-    <form method="POST" action="{% url 'libros_prestados_por_rut' %}">
+<form method="POST" action={% url 'devolver_libro' %}>
+    {% csrf_token %}
+    <label for="rut">RUT del usuario:</label>
+    <input type="text" id="rut" name="rut" value="{{ rut }}" required>
+    <br>
+    <button type="submit">Buscar préstamos</button>
+</form>
+
+{% if prestamos %}
+    <form method="POST" action={% url 'devolver_libro' %}>
         {% csrf_token %}
-        <label for="rut">RUT del usuario:</label>
-        <input type="text" id="rut" name="rut" required>
+        <label for="prestamo">Selecciona un libro para devolver:</label>
+        <select id="prestamo" name="prestamo">
+            {% for prestamo in prestamos %}
+                <option value="{{ prestamo.id }}">{{ prestamo.libro.titulo }}</option>
+            {% endfor %}
+        </select>
         <br>
-        <button type="submit">Buscar préstamos</button>
+        <button type="submit">Devolver libro</button>
     </form>
-</div>
+{% endif %}
+
+{% if multa %}
+    <p>La multa por la devolución tardía es: ${{ multa }}</p>
+{% endif %}
 {% endblock %}

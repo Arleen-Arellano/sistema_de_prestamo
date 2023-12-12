@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h3>Devolver libro</h3>
-    <form method="POST" action="{% url 'devolver_libro' %}">
+    <form method="POST" action={% url 'buscar_prestamos' %}>
         {% csrf_token %}
         <label for="rut">RUT del usuario:</label>
         <input type="text" id="rut" name="rut" value="{{ rut }}" required>
@@ -13,11 +13,17 @@
 
     {% if prestamos %}
         <h3>Préstamos de {{ rut }}</h3>
-        <ul>
-            {% for prestamo in prestamos %}
-                <li>{{ prestamo.libro.titulo }} - Multa: ${{ prestamo.multa }}</li>
-            {% endfor %}
-        </ul>
+        <form method="POST" action={% url 'devolver_libro' %}>
+            {% csrf_token %}
+            <label for="prestamo">Selecciona el préstamo a devolver:</label>
+            <select id="prestamo" name="prestamo" required>
+                {% for prestamo in prestamos %}
+                    <option value="{{ prestamo.id }}">{{ prestamo.libro.titulo }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button type="submit">Devolver libro</button>
+        </form>
     {% endif %}
 </div>
 {% endblock %}

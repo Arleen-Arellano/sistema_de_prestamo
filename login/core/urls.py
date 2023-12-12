@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib.auth.views import LoginView
-from .views import home, products, exit, insertarlibro, insertar_usuario, lista_usuarios, insertar_prestamo,lista_prestamos, devolver_libro, prestar_libro,libros_prestados_por_rut
+from .views import home, products, exit, insertarlibro, insertar_usuario, lista_usuarios, insertar_prestamo,lista_prestamos, devolver_libro, prestar_libro,libros_prestados_por_rut,buscar_prestamos
 from . import views
 
 urlpatterns = [
@@ -30,6 +30,7 @@ urlpatterns = [
     path('insertarprestamo/', insertar_prestamo, name='insertar_prestamo'),
     path('listaprestamos/', lista_prestamos, name='lista_prestamos'),
     path('prestar_libro/<int:libro_id>/<int:usuario_id>/', views.prestar_libro, name='prestar_libro'),
-    path('devolver_libro/', devolver_libro, name='devolver_libro'),
     path('libros_prestados_por_rut/', libros_prestados_por_rut, name='libros_prestados_por_rut'),
+    path('buscar_prestamos/', buscar_prestamos, name='buscar_prestamos'),
+    path('devolver_libro/', devolver_libro, name='devolver_libro'),
 ]

@@ -73,7 +73,7 @@ def insertar_usuario(request):
 def lista_usuarios(request):
     usuarios = Usuario.objects.all()
     return render(request, 'core/lista_usuarios.html', {'usuarios': usuarios})
-
+@login_required
 def insertar_prestamo(request):
     if request.method == 'POST':
         id_del_libro = request.POST.get('id_del_libro')
@@ -138,7 +138,9 @@ def devolver_libro(request):
         # Proceso de devolución
         prestamo_id = request.POST.get('prestamo')
         try:
-            prestamo = Prestamo.objects.get(id=prestamo_id, fecha_devolucion__isnull=True)
+            prestamo = Prestamo.objects.get(id=prestamo_id)
+            if prestamo.fecha_devolucion is not None:
+                return HttpResponse('El préstamo seleccionado ya ha sido devuelto.')
 
             fecha_devolucion = timezone.now()
 
@@ -157,7 +159,7 @@ def devolver_libro(request):
             libro.save()
 
             # Actualizar el estado del libro
-            return redirect('lista_prestamos')
+            return redirect('core/lista_prestamos')
 
         except Prestamo.DoesNotExist:
             return HttpResponse('El préstamo seleccionado no existe.')
@@ -175,3 +177,10 @@ def libros_prestados_por_rut(request):
         except Usuario.DoesNotExist:
             return HttpResponse('Usuario no encontrado')
     return render(request, 'core/buscar_por_rut.html')
+
+@login_required
+def buscar_prestamos(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut')
+        prestamos = Prestamo.objects.filter(usuario__rut=rut)
+        return render(request, 'core/buscar_prestamos.html', {'rut': rut, 'prestamos': prestamos})

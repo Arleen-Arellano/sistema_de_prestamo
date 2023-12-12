@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3>Buscar préstamos</h3>
+    <form method="POST" action={% url 'buscar_prestamos' %}>
+        {% csrf_token %}
+        <label for="rut">RUT del usuario:</label>
+        <input type="text" id="rut" name="rut" required>
+        <br>
+        <button type="submit">Buscar préstamos</button>
+    </form>
+
+    {% if prestamos %}
+        <h3>Préstamos de {{ rut }}</h3>
+        <form method="POST" action={% url 'devolver_libro' %}>
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Seleccionar</th>
+                        <th>Título del libro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for prestamo in prestamos %}
+                    <tr>
+                        <td><input type="radio" name="prestamo" value="{{ prestamo.id }}" required></td>
+                        <td>{{ prestamo.libro.titulo }}</td>
+                    </tr>
+                {% endfor %}
+                <input type="hidden" name="rut" value="{{ rut }}">
+                </tbody>
+            </table>
+            <button type="submit">Devolver libro seleccionado</button>
+        </form>
+    {% else %}
+        <p>No se encontraron préstamos para el RUT proporcionado.</p>
+    {% endif %}
+</div>
+{% endblock %}
