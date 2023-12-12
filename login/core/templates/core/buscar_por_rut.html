@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3>Buscar préstamos por RUT</h3>
+    <form method="POST" action="{% url 'libros_prestados_por_rut' %}">
+        {% csrf_token %}
+        <label for="rut">RUT del usuario:</label>
+        <input type="text" id="rut" name="rut" required>
+        <br>
+        <button type="submit">Buscar préstamos</button>
+    </form>
+</div>
+{% endblock %}

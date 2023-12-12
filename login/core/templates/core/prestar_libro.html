@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3>Prestar libro</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="rut">RUT del usuario:</label>
+        <input type="text" id="rut" name="rut" required>
+        <br>
+        <label for="prestamo">Préstamo:</label>
+        <select id="prestamo" name="prestamo">
+            {% for prestamo in prestamos %}
+            <option value="{{ prestamo.id }}">{{ prestamo.libro.titulo }} prestado a {{ prestamo.usuario.nombre }} {{ prestamo.usuario.apellido }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Devolver libro</button>
+    </form>
+    
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Lista de Préstamos</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID del Préstamo</th>
+                <th>Libro</th>
+                <th>Usuario</th>
+                <th>Tipo de Usuario</th>
+                <th>Fecha de Préstamo</th>
+                <th>Fecha de Devolución</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prestamo in prestamos %}
+            <tr>
+                <td>{{ prestamo.id }}</td>
+                <td>{{ prestamo.libro.titulo }}</td>
+                <td>{{ prestamo.usuario.nombre }}</td>
+                <td>
+                {% if prestamo.usuario.user_type == "DOCENTE" %}
+                    Docente
+                {% elif prestamo.usuario.user_type == "ALUMNO" %}
+                    Alumno
+                {% else %}
+                    Desconocido
+                {% endif %}
+                </td>
+                <td>{{ prestamo.fecha_prestamo|date:"d M Y" }}</td>
+                <td>{{ prestamo.fecha_devolucion|date:"d M Y" }}</td>  <!-- Corregido aquí -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

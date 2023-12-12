@@ -1,0 +1,32 @@
+{%extends 'core/base.html'%}
+
+{% block content %}
+<div class="container mt-5 custom-form">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_del_libro">Libro:</label>
+        <select class="form-control" id="id_del_libro" name="id_del_libro" required style="width: 60%; margin-right: 20px;">
+          {% for libro in libros %}
+          <option value="{{ libro.id }}">{{ libro.titulo }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="id_del_usuario">Usuario:</label>
+        <select class="form-control" id="id_del_usuario" name="id_del_usuario" required style="width: 60%; margin-right: 20px;">
+          {% for usuario in usuarios %}
+          <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fecha_de_prestamo">Fecha de Préstamo:</label>
+        <input type="date" class="form-control" id="fecha_de_prestamo" name="fecha_de_prestamo" required style="width: 60%; margin-right: 20px;">
+      </div>
+      <div class="form-group" style="margin-top: 20px;">
+        <button type="submit" class="btn btn-success" style="margin-top: 10px;">Insertar Préstamo</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

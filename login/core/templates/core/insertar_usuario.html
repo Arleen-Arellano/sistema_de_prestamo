@@ -1,0 +1,43 @@
+{%extends 'core/base.html'%}
+
+{% block content %}
+<div class="container mt-5 custom-form">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required style="width: 60%; margin-right: 20px;">
+      </div>
+      <div class="form-group">
+        <label for="apellido">Apellido:</label>
+        <input type="text" class="form-control" id="apellido" name="apellido" required style="width: 60%; margin-right: 20px;">
+      </div>
+      <div class="form-group">
+        <label for="direccion">Dirección:</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" required style="width: 60%; margin-right: 20px;">
+      </div>
+      <div class="form-group">
+        <label for="correo_electronico">Correo Electrónico:</label>
+        <input type="email" class="form-control" id="correo_electronico" name="correo_electronico" required style="width: 60%; margin-right: 20px;">
+      </div>
+      <div class="form-group">
+        <label for="numero_de_telefono">Número de Teléfono:</label>
+        <input type="text" class="form-control" id="numero_de_telefono" name="numero_de_telefono" required style="width: 60%; margin-right: 20px;">
+      </div>
+      <div class="form-group">
+        <label for="rut">RUT:</label>
+        <input type="text" class="form-control" id="rut" name="rut" required style="width: 60%; margin-right: 20px;">
+      </div>
+      <div class="form-group">
+        <label for="user_type">Tipo de Usuario:</label>
+        <select class="form-control" id="user_type" name="user_type" required style="width: 60%; margin-right: 20px;">
+          <option value="ALUMNO">Alumno</option>
+          <option value="DOCENTE">Docente</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-top: 20px;">
+        <button type="submit" class="btn btn-success" style="margin-top: 10px;">Insertar Usuario</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

@@ -21,6 +21,12 @@
               <a class="nav-link" href={% url 'products' %}>Catálogo de Libros</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href={% url 'lista_usuarios' %}>Usuarios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href={% url 'lista_prestamos' %}>Prestamos</a>
+            </li>
+            <li class="nav-item">
                 {% if request.user.is_authenticated %}
                 <a class="nav-link" href={% url 'exit' %}>Salir</a>
                 {% else %}

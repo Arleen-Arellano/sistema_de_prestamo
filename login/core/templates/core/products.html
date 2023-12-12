@@ -1,12 +1,29 @@
-{%extends 'core/base.html'%}
-
+{% extends 'core/base.html' %}
 
 {% block content %}
-
-<h3>Catálogo de Libros</h3>
-<p>producto 1</p>
-<p>producto 2</p>
-<p>producto 3</p>
-<p>producto 4</p>
-<p>producto 5</p>
+  <h3>Catálogo de Libros</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Título</th>
+          <th scope="col">Autor</th>
+          <th scope="col">Editorial</th>
+          <th scope="col">Año de Publicación</th>
+          <th scope="col">ISBN</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for libro in libros %}
+          <tr>
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.editorial }}</td>
+            <td>{{ libro.ano_de_publicacion }}</td>
+            <td>{{ libro.isbn }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
