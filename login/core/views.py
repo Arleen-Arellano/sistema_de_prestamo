@@ -8,7 +8,7 @@ from datetime import datetime, date
 from django.utils import timezone
 from django.http import HttpResponse
 from datetime import timedelta
-from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 
 # Create your views here.
@@ -73,6 +73,7 @@ def insertar_usuario(request):
 def lista_usuarios(request):
     usuarios = Usuario.objects.all()
     return render(request, 'core/lista_usuarios.html', {'usuarios': usuarios})
+
 @login_required
 def insertar_prestamo(request):
     if request.method == 'POST':
@@ -139,17 +140,13 @@ def devolver_libro(request):
         prestamo_id = request.POST.get('prestamo')
         try:
             prestamo = Prestamo.objects.get(id=prestamo_id)
-            if prestamo.fecha_devolucion is not None:
-                return HttpResponse('El préstamo seleccionado ya ha sido devuelto.')
 
-            fecha_devolucion = timezone.now()
+            prestamo.fecha_devolucion_real = timezone.now()
 
             # Calcular la multa si hay atraso
-            fecha_devuelta = prestamo.fecha_prestamo + timedelta(days=prestamo.dias_prestamo)
-            dias_atraso = max(0, (fecha_devolucion.date() - fecha_devuelta).days)
+            dias_atraso = max(0, (prestamo.fecha_devolucion_real.date() - prestamo.fecha_devolucion.date()).days)
             multa = dias_atraso * 1000  # Multa de $1000 por día de atraso
 
-            prestamo.fecha_devolucion = fecha_devolucion
             prestamo.multa_pagada = multa == 0
             prestamo.multa = multa
             prestamo.save()
@@ -157,9 +154,12 @@ def devolver_libro(request):
             libro = prestamo.libro
             libro.prestado = False
             libro.save()
+            libro.refresh_from_db()  # Recarga el libro desde la base de datos
 
-            # Actualizar el estado del libro
-            return redirect('core/lista_prestamos')
+            if multa > 0:
+                return render(request, 'core/multa.html', {'multa': multa})
+
+            return redirect('lista_prestamos')
 
         except Prestamo.DoesNotExist:
             return HttpResponse('El préstamo seleccionado no existe.')

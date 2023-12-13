@@ -2,28 +2,35 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h3>Devolver libro</h3>
-    <form method="POST" action={% url 'buscar_prestamos' %}>
+    <h3 class="mb-4">Devolver libro</h3>
+    <form method="POST" action={% url 'buscar_prestamos' %} class="mb-4">
         {% csrf_token %}
-        <label for="rut">RUT del usuario:</label>
-        <input type="text" id="rut" name="rut" value="{{ rut }}" required>
-        <br>
-        <button type="submit">Buscar préstamos</button>
+        <div class="mb-3">
+            <label for="rut" class="form-label">RUT del usuario:</label>
+            <input type="text" id="rut" name="rut" value="{{ rut }}" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar préstamos</button>
     </form>
 
     {% if prestamos %}
-        <h3>Préstamos de {{ rut }}</h3>
-        <form method="POST" action={% url 'devolver_libro' %}>
+        <h3 class="mb-4">Préstamos de {{ rut }}</h3>
+        <form method="POST" action={% url 'devolver_libro' %} class="mb-4">
             {% csrf_token %}
-            <label for="prestamo">Selecciona el préstamo a devolver:</label>
-            <select id="prestamo" name="prestamo" required>
-                {% for prestamo in prestamos %}
-                    <option value="{{ prestamo.id }}">{{ prestamo.libro.titulo }}</option>
-                {% endfor %}
-            </select>
-            <br>
-            <button type="submit">Devolver libro</button>
+            <div class="mb-3">
+                <label for="prestamo" class="form-label">Selecciona el préstamo a devolver:</label>
+                <select id="prestamo" name="prestamo" class="form-select" required>
+                    {% for prestamo in prestamos %}
+                        <option value="{{ prestamo.id }}">{{ prestamo.libro.titulo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-danger">Devolver libro</button>
         </form>
+    {% endif %}
+
+    {% if multa %}
+        <h3 class="mb-4">Multa</h3>
+        <p class="alert alert-warning">Debes pagar una multa de ${{ multa }} por devolver el libro tarde.</p>
     {% endif %}
 </div>
 {% endblock %}

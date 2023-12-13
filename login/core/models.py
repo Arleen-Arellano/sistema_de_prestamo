@@ -34,10 +34,11 @@ class Usuario(models.Model):
 class Prestamo(models.Model):
     libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    fecha_prestamo = models.DateTimeField(auto_now_add=True)
+    fecha_prestamo = models.DateTimeField(null=True, blank=True)
     fecha_devolucion = models.DateTimeField(null=True, blank=True)
     multa_pagada = models.BooleanField(default=False)
-    
+    fecha_devolucion_real = models.DateTimeField(null=True, blank=True)
+
     def save(self, *args, **kwargs):
         if not self.fecha_prestamo:
             self.fecha_prestamo = timezone.now()
@@ -46,6 +47,12 @@ class Prestamo(models.Model):
         else:  # ALUMNO
             self.fecha_devolucion = self.fecha_prestamo + timedelta(days=7)
         super().save(*args, **kwargs)
+
+    def dias_prestamo(self):
+        if self.usuario.user_type == 'DOCENTE':
+            return 20
+        else:  # ALUMNO
+            return 7
 
     def __str__(self):
         return f'Préstamo {self.id}: {self.libro.titulo} a {self.usuario.nombre}'

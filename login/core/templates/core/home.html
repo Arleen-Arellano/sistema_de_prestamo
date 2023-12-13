@@ -1,61 +1,54 @@
-{%extends 'core/base.html'%}
-
+{% extends 'core/base.html' %}
 
 {% block content %}
 
 {% if request.user.is_authenticated %}
     <hr>
-    <h4>
-        {{user.username | upper }}, Bienvenido
-    </h4>
-    <div class="card-deck mt-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Renovar Libro</h5>
-            <p class="card-text">Renueva tus libros fácilmente desde tu cuenta.</p>
-                <h5>
-                  <a class="nav-link" href={% url 'insertarlibro' %}>Inserta un nuevo Libro</a>
-                </h5>
-          </div>
+    <div class="container mt-4 mr-4">
+        <h4>
+            {{ user.username | upper }}, Bienvenido
+        </h4>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Renovar Libro</h5>
+                    <p class="card-text">Renueva tus libros fácilmente desde tu cuenta.</p>
+                    <a class="btn btn-secondary" href={% url 'insertarlibro' %}>Insertar un nuevo Libro</a>
+                </div>
+            </div>
 
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Prestamo</h5>
-            <p class="card-text">................</p>
-                <h5>
-                  <a class="nav-link" href={% url 'insertar_prestamo' %}>Inserta un nuevo prestamo</a>
-                </h5>
-          </div>
-        </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Préstamo</h5>
+                    <p class="card-text">Realiza un nuevo préstamo de libros.</p>
+                    <a class="btn btn-secondary" href={% url 'insertar_prestamo' %}>Insertar un nuevo préstamo</a>
+                </div>
+            </div>
 
-        <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Ingresa un nuevo usuario</h5>
-            <p class="card-text">............</p>
-                <h5>
-                  <a class="nav-link" href={% url 'insertar_usuario' %}>INSERTA UN NUEVO USUARIO</a>
-                </h>
-          </div>  
-        </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Insertar Usuario</h5>
+                    <p class="card-text">Inserta un nuevo usuario en el sistema.</p>
+                    <a class="btn btn-secondary" href={% url 'insertar_usuario' %}>Insertar un nuevo usuario</a>
+                </div>
+            </div>
 
-        <div class="card">
-          <div class="card-body">
-              <h5 class="card-title">Ingresa un nuevo usuario</h5>
-              <p class="card-text">............</p>
-                  <h5>
-                    <a class="nav-link" href={% url 'devolver_libro' %}>Devolver libro</a>
-                  </h>
-            </div>  
-          </div>
-  
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Notificaciones</h5>
-            <p class="card-text">Recibe notificaciones sobre fechas de devolución y novedades.</p>
-          </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Devolver Libro</h5>
+                    <p class="card-text">Devuelve libros fácilmente desde tu cuenta.</p>
+                    <a class="btn btn-secondary" href={% url 'devolver_libro' %}>Devolver libro</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Notificaciones</h5>
+                    <p class="card-text">Recibe notificaciones sobre fechas de devolución y novedades.</p>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
 {% endif %}
 
 {% endblock %}

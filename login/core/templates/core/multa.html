@@ -1,0 +1,9 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3>Multa por devolución tardía</h3>
+    <p>Debes pagar una multa de ${{ multa }} por devolver el libro tarde.</p>
+    <a href="{% url 'lista_prestamos' %}">Volver a la lista de préstamos</a>
+</div>
+{% endblock %}

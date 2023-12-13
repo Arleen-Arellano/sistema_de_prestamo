@@ -3,19 +3,20 @@
 {% block content %}
 <div class="container mt-5">
     <h3>Buscar préstamos</h3>
-    <form method="POST" action={% url 'buscar_prestamos' %}>
+    <form method="POST" action={% url 'buscar_prestamos' %} class="mb-4">
         {% csrf_token %}
-        <label for="rut">RUT del usuario:</label>
-        <input type="text" id="rut" name="rut" required>
-        <br>
-        <button type="submit">Buscar préstamos</button>
+        <div class="mb-3">
+            <label for="rut" class="form-label">RUT del usuario:</label>
+            <input type="text" id="rut" name="rut" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar préstamos</button>
     </form>
 
     {% if prestamos %}
         <h3>Préstamos de {{ rut }}</h3>
-        <form method="POST" action={% url 'devolver_libro' %}>
+        <form method="POST" action={% url 'devolver_libro' %} class="mb-4">
             {% csrf_token %}
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Seleccionar</th>
@@ -32,10 +33,10 @@
                 <input type="hidden" name="rut" value="{{ rut }}">
                 </tbody>
             </table>
-            <button type="submit">Devolver libro seleccionado</button>
+            <button type="submit" class="btn btn-danger">Devolver libro seleccionado</button>
         </form>
     {% else %}
-        <p>No se encontraron préstamos para el RUT proporcionado.</p>
+        <p class="alert alert-info">No se encontraron préstamos para el RUT proporcionado.</p>
     {% endif %}
 </div>
 {% endblock %}

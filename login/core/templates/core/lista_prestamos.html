@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Lista de Préstamos</h2>
+    <h3>Lista de Préstamos</h3>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -11,7 +11,9 @@
                 <th>Usuario</th>
                 <th>Tipo de Usuario</th>
                 <th>Fecha de Préstamo</th>
-                <th>Fecha de Devolución</th>
+                <th>Fecha de Devolución Esperada</th>
+                <th>Fecha de Devolución Real</th>
+                <th>Multa Pagada</th>
             </tr>
         </thead>
         <tbody>
@@ -21,16 +23,24 @@
                 <td>{{ prestamo.libro.titulo }}</td>
                 <td>{{ prestamo.usuario.nombre }}</td>
                 <td>
-                {% if prestamo.usuario.user_type == "DOCENTE" %}
-                    Docente
-                {% elif prestamo.usuario.user_type == "ALUMNO" %}
-                    Alumno
-                {% else %}
-                    Desconocido
-                {% endif %}
+                    {% if prestamo.usuario.user_type == "DOCENTE" %}
+                        Docente
+                    {% elif prestamo.usuario.user_type == "ALUMNO" %}
+                        Alumno
+                    {% else %}
+                        Desconocido
+                    {% endif %}
                 </td>
                 <td>{{ prestamo.fecha_prestamo|date:"d M Y" }}</td>
-                <td>{{ prestamo.fecha_devolucion|date:"d M Y" }}</td>  <!-- Corregido aquí -->
+                <td>{{ prestamo.fecha_devolucion|date:"d M Y" }}</td>
+                <td>{{ prestamo.fecha_devolucion_real|default:"N/A"|date:"d M Y H:i:s" }}</td>
+                <td>
+                    {% if prestamo.multa_pagada %}
+                        Pagada
+                    {% else %}
+                        Pendiente
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
