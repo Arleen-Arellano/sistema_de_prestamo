@@ -1,18 +1,29 @@
-{%extends 'core/base.html'%}
-
+{% extends 'core/base.html' %}
 
 {% block content %}
 
-<h3>LOGIN</h3>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3 class="mb-4">Iniciar Sesión</h3>
 
-<br>
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <input type="text" name="username" id="" placeholder="Nombe de Usuario">
-    <br>
-    <input type="password" name="password" id="" placeholder="Contraseña">
-    <br>
-    <button type="submit">Iniciar sesion</button>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
 
-</form>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de Usuario" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
